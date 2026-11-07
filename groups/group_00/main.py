@@ -52,11 +52,11 @@ def main():
                 pasta = input("Tente novamente: ")
                 
             total = total_photos(pasta)
-            numero = int(input("Digite o número da foto: ")
+            numero = int(input("Digite o número da foto: "))
             
             while numero < 1 or numero > total:
                 print("Número inválido!")
-                numero = int(input("Digite novamente: ")
+                numero = int(input("Digite novamente: "))
 
             foto = photo_name(pasta, numero)
             quantidade = count_objects(foto, nivel_confianca)
@@ -80,17 +80,17 @@ def main():
         elif option == 4:
             print("Você escolheu relatório da pasta")
 
-       elif option== 5:
-           print("Você escolheu foto mais cheia e mais vazia")
+       elif option == 5:
+            print("Você escolheu foto mais cheia e mais vazia")
 
        elif option == 6:
-           print("Você escolheu procurar uma classe")
+            print("Você escolheu procurar uma classe")
 
        elif option == 7:
-          print("Você escolheu gráfico de barras")
+            print("Você escolheu gráfico de barras")
 
        else:
-          print("Opção inválida!"
+            print("Opção inválida!")
 
 
 if __name__ == "__main__":
