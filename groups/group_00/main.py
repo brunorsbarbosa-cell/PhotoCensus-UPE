@@ -68,14 +68,38 @@ def main():
             print(f"Quantidade de objetos: {quantidade}")
             print(f"Objeto principal: {principal}")
             print(f"Maior confiança: {porcentagem} %")
-            
-
-                             
 
         
-
         elif option == 3:
             print("Você escolheu contar uma classe")
+             # Solicita a pasta
+            folder = input("Digite o nome da pasta: ")
+
+            while not folder_exists(folder):
+                print("Pasta inválida!")
+                folder = input("Digite novamente: ")
+
+            # Verifica a quantidade de fotos
+            total = total_photos(folder)
+
+            # Solicita o número da foto
+            number = int(input("Digite o número da foto: "))
+
+            while number < 1 or number > total:
+                print("Número inválido!")
+                number = int(input("Digite novamente: "))
+
+            # Encontra o caminho da foto
+            photo = photo_name(folder, number)
+
+            # Solicita a classe
+            class_name = input("Digite a classe que deseja procurar: ")
+
+            # Realiza a contagem
+            quantity = count_class(photo, class_name, nivel_confianca)
+
+            # Mostra o resultado
+            print("Quantidade encontrada:", quantity)
 
         elif option == 4:
             print("Você escolheu relatório da pasta")
