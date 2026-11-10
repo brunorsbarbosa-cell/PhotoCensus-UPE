@@ -98,7 +98,6 @@ def main():
             # Realiza a contagem
             quantity = count_class(photo, class_name, nivel_confianca)
 
-            # Mostra o resultado
             print("Quantidade encontrada:", quantity)
 
         elif option == 4:
