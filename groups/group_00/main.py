@@ -129,19 +129,19 @@ def main():
 
             print("Quantidade encontrada:", quantity)
  
-       elif option == 4:
+        elif option == 4:
             print("Você escolheu relatório da pasta")
 
-       elif option == 5:
+        elif option == 5:
             print("Você escolheu foto mais cheia e mais vazia")
 
-       elif option == 6:
+        elif option == 6:
             print("Você escolheu procurar uma classe")
 
-       elif option == 7:
+        elif option == 7:
             print("Você escolheu gráfico de barras")
 
-       else:
+        else:
             print("Opção inválida!")
 
 
