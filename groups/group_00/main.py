@@ -271,6 +271,24 @@ def main():
 
         elif option == 7:
             print("Você escolheu gráfico de barras")
+            print("-"*30)
+        #recebe a informação    
+            folder = input("Digite o nome da pasta: ")
+            while not folder_exists(folder):
+                print("Pasta inválida")
+                folder = input("Digite o nome da pasta novamente:  ")
+        #processamento
+            total = total_photos(folder)
+        #percorrer o total das fotos    
+            for numero in range(1,total + 1):
+                foto = photo_name(folder,numero)
+                quantidade = count_objects(foto,nivel_confianca)
+                print(f"{os.path.basename(foto)} | ", end="")
+            #imprimi um # para cada objeto
+                for i in range(quantidade):
+                    print("#", end=" ")
+                print(f"A quantidade de objetos foi: {quantidade}")
+            print("-"* 30)
 
         else:
             print("Opção inválida!")
