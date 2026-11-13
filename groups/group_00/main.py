@@ -131,7 +131,7 @@ def main():
  
         elif option == 4:
             print("Você escolheu relatório da pasta")
-            # start part six
+            
             def folder_report(min_confidence):
                 print('\n--- Relatório da pasta ---')
 
@@ -188,7 +188,7 @@ def main():
 
         elif option == 5:
             print("Você escolheu foto mais cheia e mais vazia")
-            # start part seven 
+             
             def fullest_and_emptiest_photo(min_confidence):
                 print('\n--- Foto mais cheia e mais vazia ---')
 
