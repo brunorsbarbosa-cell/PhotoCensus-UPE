@@ -137,6 +137,32 @@ def main():
 
         elif option == 6:
             print("Você escolheu procurar uma classe")
+        #Receber as informaçoes
+            folder = input("Digite o nome da pasta: ")  
+            while not folder_exists(folder):
+                print("Pasta inválida")
+                folder = input("Digite o nome da pasta novamente: ")
+            class_name = input("Digite a classe desejada: ")
+        
+            total_fotos = total_photos(folder)
+        #inicia os cont
+            fotos_com_classe = 0
+            total_encontrado = 0
+        # perrcorrer as fotos
+            for numero in range(1, total_fotos +1):
+                photo = photo_name(folder,numero)
+                quantidade = count_class(photo,class_name)
+                total_encontrado += quantidade
+        #verificar se a classe apareceu
+                if quantidade >0:
+                    fotos_com_classe += 1
+        #calcular a porcetagem
+                porcentagem = (fotos_com_classe/total_fotos) * 100
+        #resultados
+            print(f"Total de fotos: {total_fotos}")
+            print(f"Fotos com {class_name}: {fotos_com_classe}")
+            print(f"Total de objetos encontrados: {total_encontrado}")
+            print(f"Porcentagem: {porcentagem} %")
 
         elif option == 7:
             print("Você escolheu gráfico de barras")
