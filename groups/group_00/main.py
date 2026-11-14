@@ -38,6 +38,7 @@ def main():
         elif option == 1:
             # O usuario define o nível de confiança para um valor entre 0 e 1.
             print("Você escolheu configurar confianca")
+            print("-" *30)
             confianca = float(input(" Digite o nível de confiança: "))
             while confianca < 0 or confianca > 1:
                 print("Confiança inválida!")
@@ -46,6 +47,7 @@ def main():
 
         elif option == 2:
             print("Você escolheu analisar uma foto")
+            print("-" * 30)
             pasta = input("Digite o nome da pasta: ")
             
             # Verificando se a pasta informada existe atraves do folder exists
@@ -93,7 +95,8 @@ def main():
 
         elif option == 3:
             print("Você escolheu contar uma classe")
-
+            print("-" * 30)
+            
             folder = input("Digite o nome da pasta: ")
             
             # Validando se pasta digitada existe
@@ -131,117 +134,105 @@ def main():
  
         elif option == 4:
             print("Você escolheu relatório da pasta")
-            
-            def folder_report(min_confidence):
-                print('\n--- Relatório da pasta ---')
+            print("-" * 30)
 
-                # choose folder  
-                # Escolhendo a pasta validada com um while
-                show_folders()
+            # choose folder  
+            # Escolhendo a pasta validada com um while
+            show_folders()
+            folder = input('Digite o nome da pasta:').strip()
+            while not folder_exists(folder):
+                print('Pasta inválida! Tente novamente.')
                 folder = input('Digite o nome da pasta:').strip()
-                while not folder_exists(folder):
-                    print('Pasta inválida! Tente novamente.')
-                    folder = input('Digite o nome da pasta:').strip()
 
-                # total folder photos
-                # total de fotos na pasta
-                total = total_photos(folder)
+            # total folder photos
+            # total de fotos na pasta
+            total = total_photos(folder)
+            total_objects = 0
+            empty_photos = 0
 
-                # accumulators
-                # acumuladores manuais
-                total_objects = 0
-                empty_photos = 0
+            print(f'\nPasta: {folder} | Confiança mínima: {nivel_confianca}')
+            print('-' * 30)
 
-                print(f'\nPasta: {folder} | Confiança mínima: {min_confidence}')
-                print('------------------------------------')
+            # examination of the photos in the folders
+            # examinação das fotos nas pastas ( iniciando em 1)
+            number = 1 
+            while number <= total:
+                photo = photo_name(folder, number)
+                amount = count_objects(photo, nivel_confianca)
+                print(f'Foto {number}: {amount} objeto(s)')
+                total_objects += amount 
+                if amount == 0:
+                    empty_photos = empty_photos + 1
+                number += 1
+            # average of objects per photo
+            # média de objetos por foto fora do loop "for"
+            average = total_objects / total
 
-                # examination of the photos in the folders
-                # examinação das fotos nas pastas ( iniciando em 1)
-                for number in range(1, total + 1):
-                    photo = photo_name(folder, number)
-                    amount = count_objects(photo, min_confidence)
-   
-                    # one line per photo
-                    # uma linha por foto
-                    print(f'Foto {number}: {amount} objeto(s)')
-
-                    # accumulate the total of objects
-                    # acumulador do total de objetos
-                    total_objects = total_objects + amount
-
-                    # count photos with no objects
-                    # contar as fotos sem objetos
-                    if amount == 0:
-                        empty_photos = empty_photos + 1
-
-                # average of objects per photo
-                # média de objetos por foto fora do loop "for"
-                average = total_objects / total
-
-                # Folder report result
-                # resultado do relatório
-                print('------------------------------------')
-                print('Total geral de objetos:', total_objects)
-                print(f'Média de objetos por foto: {average:.2f}')
-                print('Fotos sem nenhum objeto:', empty_photos)
-                print('------------------------------------')
+            print('-' * 30)
+            print('Total geral de objetos:', total_objects)
+            print(f'Média de objetos por foto: {average:.2f}')
+            print('Fotos sem nenhum objeto:', empty_photos)
+            print('-' * 30)
+            
+            
 
         elif option == 5:
             print("Você escolheu foto mais cheia e mais vazia")
-             
-            def fullest_and_emptiest_photo(min_confidence):
-                print('\n--- Foto mais cheia e mais vazia ---')
+            print("-" * 30)
 
-                # choose folder
-                # escolher a pasta (sendo validada pelo while)
-                show_folders()
+            show_folders()
+            folder = input('Digite o nome da pasta: ').strip()
+            while not folder_exists(folder):
+                print('Pasta inválida! Tente novamente.')
                 folder = input('Digite o nome da pasta:').strip()
-                while not folder_exists(folder):
-                    print('Pasta inválida! Tente novamente.')
-                    folder = input('Digite o nome da pasta:').strip()
 
-                # total photos in the folder
-                # total de fotos na pasta
-                total = total_photos(folder)
+            # total photos in the folder
+            # total de fotos na pasta
+            total = total_photos(folder)
 
-                # starting with the data of photo one
-                # começando com os dados da foto 1 (para não inventar valor)
-                first_photo = photo_name(folder, 1)
-                highest_amount = count_objects(first_photo, min_confidence)
-                highest_number = 1
-                lowest_amount = highest_amount
-                lowest_number = 1
+            # starting with the data of photo one
+            # começando com os dados da foto 1 (para não inventar valor)
+            first_photo = photo_name(folder, 1)
+            highest_amount = count_objects(first_photo, nivel_confianca)
+            highest_number = 1
+            lowest_amount = highest_amount
+            lowest_number = 1
 
-                # analyze the remaining photos (from 2 to total)
-                # analisar o restante das fotos (da segunda ao total)
-                for number in range(2, total + 1):
-                    photo = photo_name(folder, number)
-                    amount = count_objects(photo, min_confidence)
+            # analyze the remaining photos (from 2 to total)
+            # analisar o restante das fotos (da segunda ao total)
+            number = 2
+            while number <= total:
+                photo = photo_name(folder, number)
+                amount = count_objects(photo, nivel_confianca)
 
-                    # new highest? (strict > keeps the first photo in case of a tie)
-                    # novo recorde? (estrito > mantém a primeira foto em caso de empate)
-                    if amount > highest_amount:
-                        highest_amount = amount
-                        highest_number = number
+                # new highest? (strict > keeps the first photo in case of a tie)
+                # novo recorde? (estrito > mantém a primeira foto em caso de empate)
+                if amount > highest_amount:
+                    highest_amount = amount
+                    highest_number = number
 
-                    # new lowest? (strict < keeps the first photo in case of a tie)
-                    # novo menor valor? (estrito < mantém a primeira foto em caso de empate)
-                    if amount < lowest_amount:
-                        lowest_amount = amount
-                        lowest_number = number
+                # new lowest? (strict < keeps the first photo in case of a tie)
+                # novo menor valor? (estrito < mantém a primeira foto em caso de empate)
+                if amount < lowest_amount:
+                    lowest_amount = amount
+                    lowest_number = number
+                number += 1
 
-                # final result 
-                # resultado final fora do laço
-                print(f'\nPasta: {folder} | Confiança mínima: {min_confidence}')
-                print('------------------------------------')
-                print(f'Foto mais cheia: nº {highest_number} com {highest_amount} objeto(s)')
-                print('Caminho:', photo_name(folder, highest_number))
-                print(f'Foto mais vazia: nº {lowest_number} com {lowest_amount} objeto(s)')
-                print('Caminho:', photo_name(folder, lowest_number))
-                print('------------------------------------')
+            # final result 
+            # resultado final fora do laço
+            print(f'\nPasta: {folder} | Confiança mínima: {nivel_confianca}')
+            print('------------------------------------')
+            print(f'Foto mais cheia: nº {highest_number} com {highest_amount} objeto(s)')
+            print('Caminho:', photo_name(folder, highest_number))
+            print(f'Foto mais vazia: nº {lowest_number} com {lowest_amount} objeto(s)')
+            print('Caminho:', photo_name(folder, lowest_number))
+            print('------------------------------------')
+             
+            
 
         elif option == 6:
             print("Você escolheu procurar uma classe")
+            print("-" * 30)
         #Receber as informaçoes
             folder = input("Digite o nome da pasta: ")  
             while not folder_exists(folder):
